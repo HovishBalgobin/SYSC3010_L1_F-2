@@ -22,11 +22,7 @@ def getCribMovement(): #returns float CribMovement
 
 key = "L1OFSYJ2OUUAM7JT"
 
-def uploadData(): #uploads the 3 data
-    # details
-    roomTemp = roomT
-    roomHumidity = roomH
-    cribMovement = cribM
+def uploadData(roomTemp, roomHumidity, cribMovement): #uploads the 3 data
 
     params = urllib.parse.urlencode({'field1': roomTemp, 'field2': roomHumidity, 'field3': cribMovement, 'key':key })
     headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
@@ -42,30 +38,33 @@ def uploadData(): #uploads the 3 data
         print("connection failed")
 
 
-def testRead(): #reads last send data and checks if it was uploaded properly
+def readLast(): #reads last send data
     URL = 'https://api.thingspeak.com/channels/1228565/feeds.json?api_key=TIQMWNUMC2X62HSF&results=1'
     get_data = requests.get(URL).json()
     field = get_data['feeds']
-    t = []
-    h = []
-    m = []
-    t.append(roomT)
-    h.append(roomH)
-    m.append(cribM)
+    data = []
     for x in field:
-        t.append(x['field1'])
-        h.append(x['field2'])
-        m.append(x['field3'])
-    print("[Written, Read]")
-    print(t)
-    print(h)
-    print(m)
+        data.append(float(x['field1']))
+        data.append(float(x['field2']))
+        data.append(float(x['field3']))
+    return data
+
+
+def comparison(array1, array2): #comepares sent data to recieved data
+    if array1 == array2:
+        print("PASS")
+    else:
+        print("FAIL")
+
 
 roomT = getRoomTemp()
 roomH = getRoomHumidity()
 cribM = getCribMovement()
+dataCriteria = [roomT, roomH, cribM]
 
-uploadData()
+uploadData(roomT, roomH, cribM)
 print("Data sent")
-time.sleep(5)
-testRead()
+time.sleep(2)
+readData = readLast()
+
+comparison(dataCriteria, readData)
