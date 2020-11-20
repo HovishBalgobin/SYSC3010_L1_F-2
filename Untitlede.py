@@ -19,7 +19,7 @@ POLLING_TIMEOUT = 30
 
 def read(key,Id, fields):
     URL = 'https://api.thingspeak.com/channels/'+Id+'/feeds.json?api_key='
-    HEADER = '&result=0'
+    HEADER = '&results=1'
     nURL = URL+key+HEADER
     #print (nURL)
     get_data = requests.get(nURL).json()
@@ -38,7 +38,7 @@ def read(key,Id, fields):
         else: field_3=""
     except:
         return False
-    
+    print([Id, last_entry_id, field_1, field_2, field_3])
     return [last_entry_id, field_1, field_2, field_3]
     
      
@@ -72,10 +72,10 @@ def write(key,ms1,ms2,fields):
     HEADER = '&field1={}'.format(ms1)
     if (fields >=2): HEADER += '&field2={}'.format(ms2)
     NEWURL = URL+key+HEADER
-    print(NEWURL)
+    #print(NEWURL)
 
     data = urllib.request.urlopen(NEWURL)
-    print(data)
+    #print(data)
     print("The message written is " + ms1) 
     
 if __name__ == '__main__':
@@ -91,12 +91,13 @@ if __name__ == '__main__':
         read_data = read(Channel_2[1], Channel_2[0], 2)
         if(read_data[0] > old_value_1[0]):
             print("Response Received")
-            response_data = read_data[2]
+            response_data = str(read_data[2])
             break;
         
         time.sleep(1)
         i += 1
     
+    print(response_data)
     if(response_data == "GasAlert"):
         print("Pass")
     else:
@@ -139,7 +140,7 @@ if __name__ == '__main__':
         
         time.sleep(1)
         i += 1
-    if(response_data[0] == "23.4" and response_data[1] == "34.5" and response_data[0] == "1.23"):
+    if(response_data and response_data[0] == "23.4" and response_data[1] == "34.5" and response_data[0] == "1.23"):
         print("Pass")
     else:
         print("Fail")
