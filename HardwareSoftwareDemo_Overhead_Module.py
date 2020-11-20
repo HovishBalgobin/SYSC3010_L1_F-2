@@ -100,9 +100,9 @@ def testing():
         print ("Test Mobile failed")
         testmobile=False 
     
-##    TemperatureTestFlag=[False,False,False]
-##    Temperature=[37.9,-12.3,38.0]
-##    for i in Temperature:
+    TemperatureTestFlag=[False,False,False]
+    Temperature=[37.9,-12.3,38.0]
+    for i in Temperature:
         
     TemperatureTestFlag=False
     Temp =getBabyTemperature()
