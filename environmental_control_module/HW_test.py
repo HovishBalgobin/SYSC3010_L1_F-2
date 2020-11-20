@@ -19,11 +19,13 @@ def hw_testsuite():
     
     print("Begin Waiting for Alerts from the Gas Sensor and Sound Sensor...")
     
+    # Initialize the polling flags
     gasDetected = False
     soundDetected = False
     
     i = 0
     
+    # Begin Polling for Alerts 
     while i <= POLLING_TIMEOUT:
         newEvents = peripheralInterfaces.wasSensorTriggered()
         if (not gasDetected and 'GasAlert' in newEvents):
@@ -38,7 +40,6 @@ def hw_testsuite():
         time.sleep(1)
         i += 1
     
-    # Attempt to write an alert to the Alert Channel (L1_F_2b1)
     if (gasDetected and soundDetected):
         print("Receive Alert from Gas Sensor and Sound Sensor: SUCCEEDED")
     else:
