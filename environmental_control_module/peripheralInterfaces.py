@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 from queue import Queue
-from threading import Thread
 
 # Peripheral GPIO Channel Numbers
 gasAlertChannel = 11
