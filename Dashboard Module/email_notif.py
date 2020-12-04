@@ -8,7 +8,6 @@ def email_alert(reason_str="", r_email):
     recipient = r_email
     msg = "From: babymonitor3010@gmail.com\nTo:" + recipient +"\nSubject: " + reason_str
     msg = msg + "\n\nThe baby monitering system has read data out of set bounds. \nPlease check on the baby\n"
-    print(msg)
 
     try:
         server.sendmail('test_email@zoho.com',recipient,msg)
