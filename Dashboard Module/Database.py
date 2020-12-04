@@ -29,7 +29,11 @@ def create_event_log(conn):
     except Error as e:
         print(e)                    
 
-
+def getLastDataEntries(conn,numberOfEntries):
+    cursor = conn.cursor()
+    cursor.execute('''SELECT * FROM (SELECT * FROM employees ORDER BY datapoint_id DESC LIMIT''' + str(numberOfEntries) + ''') ORDER BY datapoint_id ASC;''');
+    conn.commit()
+    return cursor.fetchall()
 
 def insertUserTable(conn,child_temp,crib_acc,room_temp,room_hum):
     cursor = conn.cursor()

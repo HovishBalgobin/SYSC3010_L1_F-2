@@ -38,12 +38,12 @@ def write2(on2):
             print ("connection failed")
         break
 
-def read1():
-    url = 'https://api.thingspeak.com/channels/1161308/feeds.json?api_key=8XPC82KQHOMRB0V3&results=1'
+def read1(number_of_results):
+    url = 'https://api.thingspeak.com/channels/1161308/feeds.json?api_key=8XPC82KQHOMRB0V3&results='
+    url += str(number_of_results)
     get_data = requests.get(url).json()
     subject = get_data["feeds"]
-    current = subject[0]
-    results = [current["field1"],current["field2"]]
+    results = [ str(current["field2"]) for current in subject ]
     return results
 
 def read2():
