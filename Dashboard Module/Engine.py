@@ -114,13 +114,13 @@ def dataPolling(dbconn, recipient_email):
         
         if (alert_level == 'Low'):
             alert_list = str(alert_types)[1:(len(str(alert_types))-1)]
-            #email_alert(alert_list, recipient_email)
-            #low_alert()
+            email_alert(alert_list, recipient_email)
+            low_alert()
             
         elif (alert_level == 'High'):
             alert_list = str(alert_types)[1:(len(str(alert_types))-1)]
             email_alert(alert_list, recipient_email)
-            #high_alert()
+            high_alert()
         
         if (activateFan):
             write2("FanOn")
