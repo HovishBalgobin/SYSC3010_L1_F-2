@@ -16,8 +16,10 @@ def fanThread():
         read_data = thingspeak.action_read()
         
         if(read_data[0] > starting_id):
-            print("Response Received")
+            starting_id = read_data[0]
             response_data = read_data[2]
+            
+            print("Fan Control Message Received:", response_data)
             
             if (response_data == "FanOn"):
                 peripheralInterfaces.controlFan(True)

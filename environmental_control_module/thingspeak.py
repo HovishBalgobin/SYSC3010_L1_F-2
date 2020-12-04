@@ -73,3 +73,5 @@ def action_read():
 # E2E_Test Testing Code
 #if __name__ == '__main__':
 #    _thingspeak_post(Recieving_URL_List, "controlFan", "FanOn")
+#    time.sleep(5)
+#    _thingspeak_post(Recieving_URL_List, "controlFan", "FanOff")
