@@ -2,16 +2,40 @@ from Database import *
 from Thingspeak import *
 import RPi.GPIO as GPIO
 import time
+<<<<<<< Updated upstream
 from Alerts import *
+=======
+GPIO.setmode(GPIO.BOARD)
+from GUI_Structure import *
+>>>>>>> Stashed changes
 
 
 global mintemp, maxtemp, minHum, maxHum, maxAcc;
 
+<<<<<<< Updated upstream
 mintemp = 20
 maxtemp = 35
 minHum = 20
 maxHum = 40
 maxAcc = 0.4
+=======
+
+def modify_parameters(mintemp1,maxtemp1,minHum1,maxHum1):
+    
+    
+    mintemp=mintemp1
+    maxtemp=maxtemp1
+    minHum=minHum1
+    maxHum=maxHum1
+    
+    print(mintemp)
+    print(maxtemp)
+    print(minHum)
+    print(maxHum)
+
+
+
+>>>>>>> Stashed changes
 dbconn = create_connection(r"pythonsqlite.db")
 #print("Enter Minimum RoomTemp: ")
 #mintemp = input()

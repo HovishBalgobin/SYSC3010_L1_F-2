@@ -1,11 +1,14 @@
 import tkinter as tk #importing the interface for the buuiliding of the GUI
 from tkinter import *
 import sqlite3 #Importing for interaction with the database
+##from Engine import *
+from Database import *
 
 editable_flag=True #flag being used to allow user to 
 password_saved="" #global variables for GUI variables
 password_try=""
 Name=""
+##dbconn = create_connection(r"pythonsqlite.db")
 
 def create_welcome_window(): #Creating the main window for the interactions
     
@@ -18,6 +21,8 @@ def create_welcome_window(): #Creating the main window for the interactions
         )
     welcome = welcomelabel
     welcome.pack()
+    
+    dbconn = create_connection("")
     
     def create_button(window,name,command_passed): #function to create buttons
         button=tk.Button(window,text=name,command=command_passed)
@@ -61,15 +66,15 @@ def create_welcome_window(): #Creating the main window for the interactions
         room_min_label.pack()
         room_min_entry.pack()   
         
-        baby_max_label=tk.Label(registerwindow,text="Baby Maximum Temperature")
-        baby_max_entry=tk.Entry(registerwindow)
-        baby_max_label.pack()
-        baby_max_entry.pack()
-        
-        baby_min_label=tk.Label(registerwindow,text="Baby Minimum Temperature")
-        baby_min_entry=tk.Entry(registerwindow)
-        baby_min_label.pack()
-        baby_min_entry.pack()        
+##        baby_max_label=tk.Label(registerwindow,text="Baby Maximum Temperature")
+##        baby_max_entry=tk.Entry(registerwindow)
+##        baby_max_label.pack()
+##        baby_max_entry.pack()
+##        
+##        baby_min_label=tk.Label(registerwindow,text="Baby Minimum Temperature")
+##        baby_min_entry=tk.Entry(registerwindow)
+##        baby_min_label.pack()
+##        baby_min_entry.pack()        
         
         roomH_max_label=tk.Label(registerwindow,text="Room Maximum Humidity")
         roomH_max_entry=tk.Entry(registerwindow)
@@ -90,7 +95,9 @@ def create_welcome_window(): #Creating the main window for the interactions
             password_saved = password_entry.get() #To be completed
             print(password_saved)            
             Name = name_entry.get()
-            
+##            modify_parameters(room_min_entry.get(),room_max_entry.get(),roomH_min_entry.get(),roomH_max_entry.get())            
+##            baby_max_entry.get()
+##            baby_min_entry.get() 
             registerwindow.destroy()
         
         
@@ -131,18 +138,22 @@ def create_welcome_window(): #Creating the main window for the interactions
         
         
         
-##    def SmartCrib():
+    def SmartCrib():
+        dataPolling(dbconn)
                 #function starting the whole process
                 #The Smartcrib function is the function that is set in motion when we press on the button "START" on the main screen
                 #This should trigger all of our codes and start the project
                 #Alongside all data being recorded, actions being sent must start being displayed as soon as this function is called
               #To be completed
-        textbox.insert(Insert,"The temperature of the room is :"+ .....) #To be Completed
-        textbox.insert(Insert,"The temperature of" Name "is :"+ .....) # To be completed
-        textbox.insert(Insert,"The humidity of the room is :"+ .....) #TO be completed
-        textbox.insert(Insert,"The gas concentration of the room is :"+ .....)
         
-##    def Stop(): #function stopping the process
+##        textbox.insert(Insert,"The temperature of the room is :"+ .....) #To be Completed
+##        textbox.insert(Insert,"The temperature of" Name "is :"+ .....) # To be completed
+##        textbox.insert(Insert,"The humidity of the room is :"+ .....) #TO be completed
+##        textbox.insert(Insert,"The gas concentration of the room is :"+ .....)
+        
+    def Stop():
+        stopPolling()
+                #function stopping the process
                 #function to be completed 
         
     
