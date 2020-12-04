@@ -1,13 +1,18 @@
 import tkinter as tk #importing the interface for the buuiliding of the GUI
 from tkinter import *
 import sqlite3 #Importing for interaction with the database
-##from Engine import *
+from Engine import *
 from Database import *
+#from email_notif import email_alert
 
 editable_flag=True #flag being used to allow user to 
 password_saved="" #global variables for GUI variables
 password_try=""
 Name=""
+
+global email_entry_send
+email_entry_send = ""
+
 ##dbconn = create_connection(r"pythonsqlite.db")
 
 def create_welcome_window(): #Creating the main window for the interactions
@@ -56,6 +61,7 @@ def create_welcome_window(): #Creating the main window for the interactions
         email_label.pack()
         email_entry.pack() #creating the tetboxes for the user defined parameters
         
+        
         room_max_label=tk.Label(registerwindow,text="Room Maximum Temperature")
         room_max_entry=tk.Entry(registerwindow)
         room_max_label.pack()
@@ -95,7 +101,11 @@ def create_welcome_window(): #Creating the main window for the interactions
             password_saved = password_entry.get() #To be completed
             print(password_saved)            
             Name = name_entry.get()
-##            modify_parameters(room_min_entry.get(),room_max_entry.get(),roomH_min_entry.get(),roomH_max_entry.get())            
+            
+##            modify_parameters(room_min_entry.get(),room_max_entry.get(),roomH_min_entry.get(),roomH_max_entry.get())
+            email_entry_send = email_entry.get()
+            print(email_entry_send,"test",email_entry.get())
+            
 ##            baby_max_entry.get()
 ##            baby_min_entry.get() 
             registerwindow.destroy()
@@ -138,42 +148,35 @@ def create_welcome_window(): #Creating the main window for the interactions
         
         
         
-    def SmartCrib():
-        dataPolling(dbconn)
+        
+    def SmartCrib(recipient_email):
+        print(email_entry_send,"test")
+        dataPolling(dbconn,recipient_email)
                 #function starting the whole process
                 #The Smartcrib function is the function that is set in motion when we press on the button "START" on the main screen
                 #This should trigger all of our codes and start the project
                 #Alongside all data being recorded, actions being sent must start being displayed as soon as this function is called
               #To be completed
-        
-##        textbox.insert(Insert,"The temperature of the room is :"+ .....) #To be Completed
-##        textbox.insert(Insert,"The temperature of" Name "is :"+ .....) # To be completed
-##        textbox.insert(Insert,"The humidity of the room is :"+ .....) #TO be completed
-##        textbox.insert(Insert,"The gas concentration of the room is :"+ .....)
+        informationcall= getLastDataEntries(dbconn,1)[0]
+        textbox.insert(Insert,"The temperature of the room is :"+ informationcall[3]) #To be Completed
+        textbox.insert(Insert,"The temperature of" + Name + "is :"+ informationcall[1]) # To be completed
+        textbox.insert(Insert,"The humidity of the room is :"+ informationcall[4]) #TO be completed
+        ##textbox.insert(Insert,"The gas concentration of the room is :"+ getLastDataEntries(dbconn,1)[3])
         
     def Stop():
         stopPolling()
                 #function stopping the process
-                #function to be completed 
+                #function to be completed
         
-    
-    
-                
-    
-                
-    
-            
-            
-        
-        
-     
-    #create_button(window,"START",SmartCrib) Uncomment Later
+    create_button(window,"START",lambda : SmartCrib(email_entry_send))
+    #button= Tk.Button(master=window,text="START",command= lambda : SmartCrib(email_entry_send)) #Uncomment Later
+    #button.pack()
         
     create_button(window,"REGISTER",register_window)
 ##    create_button(window."EDIT",edit_window)
     create_button(window,"RESET",reset_window)
     
-    #create_button(window,"STOP",Stop) Uncomment Later
+    create_button(window,"STOP",Stop) #Uncomment Later
     
     textbox= Text(window,height=20,width=40) 
     textbox.pack()
