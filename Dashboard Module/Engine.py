@@ -3,6 +3,7 @@ from Thingspeak import *
 import RPi.GPIO as GPIO
 import time
 from Alerts import *
+from email_notif import email_alert
 
 
 global mintemp, maxtemp, minHum, maxHum, maxAcc;
@@ -34,7 +35,7 @@ global pollingEnabled
 def stopPolling():
     pollingEnabled = False
 
-def dataPolling(dbconn):
+def dataPolling(dbconn, recipient_email):
     pollingEnabled = True
     #print("Enter Minimum RoomTemp: ")
     #mintemp = input()
@@ -54,6 +55,7 @@ def dataPolling(dbconn):
     #create_data_log(dbconn)
     #create_event_log(dbconn)
     while pollingEnabled:
+        alert_types = []
         alert_level = "None"
         activateFan = False
         gasDetected = False
@@ -65,10 +67,19 @@ def dataPolling(dbconn):
             result1 = read1(new_entry_id - entry_id)
             entry_id = new_entry_id
             
+            if ('GasAlert' in result1):
+                gasDetected = True
+            
+            if ('SoundAlert' in result1):
+                soundDetected = True
+            
         result2 = read2()
         
         result3 = read3()
     #    print(result3)
+    
+        
+        
         
         insertUserTable(dbconn,float(result2),float(result3[2]),float(result3[0]),float(result3[1]))
         last_entry_id = int(getLastDataEntries(dbconn, 1)[0][0]) # TODO
@@ -76,30 +87,40 @@ def dataPolling(dbconn):
         
         if(int(result2) < mintemp or int(result2) > maxtemp or float(result3[0]) < mintemp or float(result3[0]) > maxtemp): 
             insertUserTable2(dbconn,'TempAlert',last_entry_id)
+            alert_types.append("Temperature Alert")
             alert_level = "Low"
         
         if (float(result3[1]) < minHum or float(result3[1]) > maxHum): #Humidity
             insertUserTable2(dbconn,'HumidityAlert',last_entry_id)
+            alert_types.append("Humidity Alert")
             alert_level = "Low"
             activateFan = True
         
         if (float(result3[2]) > maxAcc): # Motion
             insertUserTable2(dbconn,'MovementAlert',last_entry_id)
+            alert_types.append("Movement Alert")
             write1("Action")
             alert_level = "Low"
 
         if (soundDetected): # Sound
+            alert_types.append("Loud Sound Alert")
             alert_level = "Low"
         
-        if (gasDetected): # Gas 
+        if (gasDetected): # Gas
+            alert_types.append("Harardous Gas Alert")
             alert_level = "High"
             activateFan = True
         
         
         if (alert_level == 'Low'):
-            low_alert()
+            alert_list = str(alert_types)[1:(len(str(alert_types))-1)]
+            #email_alert(alert_list, recipient_email)
+            #low_alert()
+            
         elif (alert_level == 'High'):
-            high_alert()
+            alert_list = str(alert_types)[1:(len(str(alert_types))-1)]
+            email_alert(alert_list, recipient_email)
+            #high_alert()
         
         if (activateFan):
             write2("FanOn")
@@ -113,5 +134,5 @@ def dataPolling(dbconn):
 
 if __name__ == '__main__':
     dbconn = create_connection("")
-    dataPolling(dbconn)
+    dataPolling(dbconn, "jackharold@cmail.carleton.ca")
     

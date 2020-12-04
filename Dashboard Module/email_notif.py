@@ -1,6 +1,6 @@
 import smtplib, ssl
 
-def email_alert(reason_str="", r_email):
+def email_alert(reason_str, r_email):
 
     server = smtplib.SMTP_SSL("smtp.gmail.com", port = 465)
     server.login("babymonitor3010@gmail.com","termproject")
