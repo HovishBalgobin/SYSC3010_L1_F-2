@@ -2,13 +2,16 @@ from Database import *
 from Thingspeak import *
 import RPi.GPIO as GPIO
 import time
-GPIO.setmode(GPIO.BOARD)
+from Alerts import *
 
-#GPIO.setup(7, GPIO.OUT)
-#GPIO.setup(11, GPIO.OUT)
 
-global mintemp, maxtemp, minHum, maxHum, minAcc, maxAcc;
+global mintemp, maxtemp, minHum, maxHum, maxAcc;
 
+mintemp = 20
+maxtemp = 35
+minHum = 20
+maxHum = 40
+maxAcc = 0.4
 dbconn = create_connection(r"pythonsqlite.db")
 #print("Enter Minimum RoomTemp: ")
 #mintemp = input()
@@ -54,7 +57,7 @@ while True:
 #    print(result3)
     
     insertUserTable(dbconn,float(result2),float(result3[2]),float(result3[0]),float(result3[1]))
-    last_entry_id = getLastDataEntries(dbconn, 1)[0] # TODO
+    last_entry_id = int(getLastDataEntries(dbconn, 1)[0][0]) # TODO
     
     
     if(int(result2) < mintemp or int(result2) > maxtemp or float(result3[0]) < mintemp or float(result3[0]) > maxtemp): 
@@ -66,7 +69,7 @@ while True:
         alert_level = "Low"
         activateFan = True
     
-    if (float(result3[2]) < minAcc or float(result3[2]) > maxAcc): # Motion
+    if (float(result3[2]) > maxAcc): # Motion
         insertUserTable2(dbconn,'HumidityAlert',last_entry_id)
         alert_level = "Low"
     
@@ -88,5 +91,5 @@ while True:
     
     time.sleep(10)
     
-GPIO.cleanup()
+
 
