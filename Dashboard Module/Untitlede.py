@@ -38,7 +38,7 @@ def read(key,Id, fields):
         else: field_3=""
     except:
         return False
-    print([Id, last_entry_id, field_1, field_2, field_3])
+    #print([Id, last_entry_id, field_1, field_2, field_3])
     return [last_entry_id, field_1, field_2, field_3]
     
      
@@ -135,12 +135,12 @@ if __name__ == '__main__':
         read_data = read(Channel_5[1], Channel_5[0], 3)
         if(read_data[0] > old_value_3[0]):
             print("Response Received")
-            response_data = read_data[1:3]
+            response_data = read_data[1:4]
             break;
         
         time.sleep(1)
         i += 1
-    if(response_data and response_data[0] == "23.4" and response_data[1] == "34.5" and response_data[0] == "1.23"):
+    if(response_data and str(response_data[0]) == "23.4" and str(response_data[1]) == "34.5" and str(response_data[2]) == "1.23"):
         print("Pass")
     else:
         print("Fail")
