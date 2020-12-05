@@ -10,8 +10,10 @@ seed(1)
 
 #    By Hovish Balgobin (Student ID: 101125942)
 #    3rd Computer Systems Engineering Student
-#    SYSC 3010 HardwareSoftwareDemo for the Overhead Module
-#    Code+Testing
+#    SYSC 3010 Final Demo for the Overhead Module
+#    This code was used for the final demonstration of the Smart Crib project.
+#    It can be used to connect a simulated thermal camera and motors to a database.
+#    This code consists of some of the parts from the Hardware and End to End demo.
 
 
 
@@ -174,7 +176,8 @@ def testing():
         print("Test Failed")
         
 
-#Runs the entire testing function.
+#Runs the entire main function.
+        
 if __name__=='__main__':
     
     while(1):    
