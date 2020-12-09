@@ -34,41 +34,41 @@
 ## Git File Structure
 
 ├── Dashboard Module (Central Communication Node with GUI)
-│   ├── Alerts.py
-│   ├── Database.py
-│   ├── email_notif.py
-│   ├── Engine.py
-│   ├── GUI_Structure.py
-│   ├── projectdatabase.db
-│   ├── Thingspeak.py
-│   └── Untitlede.py
-|
+    ├── Alerts.py
+    ├── Database.py
+    ├── email_notif.py
+    ├── Engine.py
+    ├── GUI_Structure.py
+    ├── projectdatabase.db
+    ├── Thingspeak.py
+    └── Untitlede.py
+ 
 ├── environmental_control_module (Hazard detection module with gas, sound sensors and fan)
-│   ├── E2E_test.py
-│   ├── environment_control_module.py
-│   ├── HW_test.py
-│   ├── peripheralInterfaces.py
-│   └── thingspeak.py
-|
+    ├── E2E_test.py
+    ├── environment_control_module.py
+    ├── HW_test.py
+    ├── peripheralInterfaces.py
+    └── thingspeak.py
+ 
 ├── Lab-5 (3010 Lab 5 - Not a part of the final crib design)
-│   ├── AB.py
-│   ├── A.py
-│   ├── B.py
-│   ├── CD.py
-│   ├── C.py
-│   ├── D.py
-│   └── Lab5.py
-|
+    ├── AB.py
+    ├── A.py
+    ├── B.py
+    ├── CD.py
+    ├── C.py
+    ├── D.py
+    └── Lab5.py
+ 
 ├── overhead_module (Overhead mounted module with thermal camera and mobile)
-│   ├── end-to-end-demo.py
-│   ├── Final_Demo_Overhead_Module.py
-│   └── HardwareSoftwareDemo_Overhead_Module.py
-|
+    ├── end-to-end-demo.py
+    ├── Final_Demo_Overhead_Module.py
+    └── HardwareSoftwareDemo_Overhead_Module.py
+ 
 ├── README.md (You are Here!)
-|
+ 
 ├── sensing_hardware 
-│   ├── sense_data_collection.py
-│   └── sensing_hardware_test.py
+    ├── sense_data_collection.py
+    └── sensing_hardware_test.py
 └── sensing_module (Atmospheric Sensing Platform with senseHat)
     ├── E2E_fixed_test.py
     ├── E2E_sense_test.py
